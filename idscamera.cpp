@@ -68,9 +68,12 @@ void IDSCamera::stop_capture()
  * Get the next image from video stream (start capture before calling this function)
  * @return image buffer
  */
-char *IDSCamera::next_image()
+void *IDSCamera::next_image()
 {
     is_FreezeVideo(m_handle, IS_DONT_WAIT);
+    //for(unsigned int i=0; i<this->width()*this->height(); i++)
+    //    if( m_mem_buffer[i] == 0)
+    //        m_mem_buffer[i] = 1;
     return m_mem_buffer;
 }
 

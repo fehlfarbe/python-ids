@@ -16,7 +16,7 @@ public:
     bool start_capture();
     void stop_capture();
 
-    char *next_image();
+    void *next_image();
 
     bool set_slave(IDSCamera &slave);
     void set_auto_param();

@@ -7,6 +7,8 @@ Swig Module for IDS camera Python wrapper
 // module name
 %module(directors="1") idscamera
 
+%include "cdata.i"
+
 %{
 	#define SWIG_FILE_WITH_INIT
     #include "idscamera.h"
@@ -22,11 +24,10 @@ Swig Module for IDS camera Python wrapper
 %pythoncode {
     def next(self):
         import numpy as np
-        img = self.next_image()
-        if len(img) > 0:
-            img = np.frombuffer(img, dtype=np.uint8, count=len(img))
-            return img.reshape((self.height(), self.width()))
-        else:
-            return np.zeros((self.height(), self.width()), dtype=np.uint8)
+        import idscamera
+        img = idscamera.cdata(self.next_image(), self.height() * self.width())
+        img = np.frombuffer(img, dtype=np.uint8, count=self.height() * self.width())
+        return img.reshape((self.height(), self.width()))
+
    }
 }
